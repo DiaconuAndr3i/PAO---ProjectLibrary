@@ -1,0 +1,16 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+                           http://www.springframework.org/schema/aop
+                           http://www.springframework.org/schema/aop/spring-aop-3.0.xsd ">
+
+    <!-- This is required only in annotation based AOP configuration -->
+    <aop:aspectj-autoproxy />
+
+    <!-- Definition for aspect containing all advices -->
+    <bean id = "aspectAddressConfig" class = "com.springboot.system.Library.pointcut.AspectAddressConfig"/>
+    <bean id = "addressInterfaceService" class="com.springboot.system.Library.services.AddressService"/>
+
+</beans>
