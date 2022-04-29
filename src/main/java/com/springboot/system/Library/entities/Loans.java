@@ -1,7 +1,9 @@
 package com.springboot.system.Library.entities;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -15,26 +17,26 @@ public class Loans {
     private Date expectationDate;
     private Date returnDate;
 
-    @OneToOne
-    @JoinColumn(name = "subscriber_id")
-    private Subscriber subscriber;
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "library_id", referencedColumnName = "id")
+    private List<Library> library = new ArrayList<>();
 
-    @OneToOne
-    @JoinColumn(name = "book_copy_id")
-    private BookCopy bookCopy;
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "subscriber_id", referencedColumnName = "id")
+    private List<Subscriber> subscriber = new ArrayList<>();
 
-    public Loans(long id, Date startDate, Date expectationDate, Date returnDate, Subscriber subscriber, BookCopy bookCopy) {
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "book_copy_id", referencedColumnName = "id")
+    private List<BookCopy> bookCopy = new ArrayList<>();
+
+    public Loans( Date startDate, Date expectationDate, Date returnDate) {
         super();
-        this.id = id;
         this.startDate = startDate;
         this.expectationDate = expectationDate;
         this.returnDate = returnDate;
-        this.subscriber = subscriber;
-        this.bookCopy = bookCopy;
     }
 
     public Loans() {
-        this(0, null, null, null, null, null);
     }
 
     public long getId() {
@@ -69,20 +71,40 @@ public class Loans {
         this.returnDate = returnDate;
     }
 
-    public void setSubscriber(Subscriber subscriber) {
+    public List<Library> getLibrary() {
+        return library;
+    }
+
+    public void setLibrary(List<Library> library) {
+        this.library = library;
+    }
+
+    public void addLibrary(Library library){
+        this.getLibrary().add(library);
+    }
+
+    public List<Subscriber> getSubscriber() {
+        return subscriber;
+    }
+
+    public void setSubscriber(List<Subscriber> subscriber) {
         this.subscriber = subscriber;
     }
 
-    public void setBookCopy(BookCopy bookCopy) {
-        this.bookCopy = bookCopy;
+    public void addSubscriber(Subscriber subscriber){
+        this.getSubscriber().add(subscriber);
     }
 
-    public BookCopy getBookCopy() {
+    public List<BookCopy> getBookCopy() {
         return bookCopy;
     }
 
-    public Subscriber getSubscriber() {
-        return subscriber;
+    public void setBookCopy(List<BookCopy> bookCopy) {
+        this.bookCopy = bookCopy;
+    }
+
+    public void addBookCopy(BookCopy bookCopy){
+        this.getBookCopy().add(bookCopy);
     }
 
     @Override
@@ -92,6 +114,7 @@ public class Loans {
                 ", startDate=" + startDate +
                 ", expectationDate=" + expectationDate +
                 ", returnDate=" + returnDate +
+                ", library=" + library +
                 ", subscriber=" + subscriber +
                 ", bookCopy=" + bookCopy +
                 '}';
@@ -102,11 +125,13 @@ public class Loans {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Loans loans = (Loans) o;
-        return getId() == loans.getId() && Objects.equals(getStartDate(), loans.getStartDate()) && Objects.equals(getExpectationDate(), loans.getExpectationDate()) && Objects.equals(getReturnDate(), loans.getReturnDate()) && Objects.equals(getSubscriber(), loans.getSubscriber()) && Objects.equals(getBookCopy(), loans.getBookCopy());
+        return id == loans.id && Objects.equals(startDate, loans.startDate) && Objects.equals(expectationDate, loans.expectationDate) &&
+                Objects.equals(returnDate, loans.returnDate) && Objects.equals(library, loans.library) && Objects.equals(subscriber, loans.subscriber)
+                && Objects.equals(bookCopy, loans.bookCopy);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getStartDate(), getExpectationDate(), getReturnDate(), getSubscriber(), getBookCopy());
+        return Objects.hash(id, startDate, expectationDate, returnDate, library, subscriber, bookCopy);
     }
 }

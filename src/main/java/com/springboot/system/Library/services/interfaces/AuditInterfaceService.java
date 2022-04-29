@@ -8,4 +8,5 @@ public interface AuditInterfaceService {
     List<Audit> getAllRecords();
 
     Audit createRecord(Audit audit);
+    Audit createAction(String string);
 }

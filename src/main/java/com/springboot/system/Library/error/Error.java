@@ -4,12 +4,14 @@ import java.util.Date;
 
 public class Error {
 
+    private String message;
     private Date timestamp;
     private String details;
 
-    public Error(Date timestamp, String details) {
+    public Error(Date timestamp, String details, String message) {
         this.timestamp = timestamp;
         this.details = details;
+        this.message = message;
     }
 
     public Date getTimestamp() {
@@ -28,10 +30,19 @@ public class Error {
         this.details = details;
     }
 
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
     @Override
     public String toString() {
         return "Error{" +
-                "timestamp='" + timestamp + '\'' +
+                "message='" + message + '\'' +
+                ", timestamp=" + timestamp +
                 ", details='" + details + '\'' +
                 '}';
     }

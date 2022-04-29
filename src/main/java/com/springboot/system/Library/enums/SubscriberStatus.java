@@ -1,7 +1,8 @@
 package com.springboot.system.Library.enums;
 
-public enum ReservationStatus {
-    RESERVED,
+public enum SubscriberStatus {
+    ACTIVE,
+    CLOSED,
     CANCELED,
     NONE
 }

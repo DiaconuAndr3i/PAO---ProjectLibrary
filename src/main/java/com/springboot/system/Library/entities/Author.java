@@ -1,5 +1,6 @@
 package com.springboot.system.Library.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.springboot.system.Library.utilities.Book;
 import com.springboot.system.Library.utilities.Person;
 
@@ -12,23 +13,27 @@ import java.util.Set;
 @Table(name = "author")
 public class Author extends Person {
 
-    @ManyToMany(mappedBy="authors")
-    private final Set<BookCopy> bookCopies = new HashSet<>();
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy="authors")
+    @JsonIgnore
+    private Set<BookCopy> bookCopies = new HashSet<>();
 
-    public Author(String firstName, String lastName, Address address, String phoneNumber, long id) {
-        super(firstName, lastName, address, phoneNumber, id);
+    public Author(String firstName, String lastName, Address address, String phoneNumber) {
+        super(firstName, lastName, address, phoneNumber);
     }
 
     public Author() {
-        this(null, null, null, null, 0);
     }
 
-   public Set<BookCopy> getBookCopies() {
+    public Set<BookCopy> getBookCopies() {
         return bookCopies;
     }
 
+    public void setBookCopies(Set<BookCopy> bookCopies) {
+        this.bookCopies = bookCopies;
+    }
+
     public void addBookCopy(BookCopy bookCopy){
-        this.bookCopies.add(bookCopy);
+        this.getBookCopies().add(bookCopy);
     }
 
     @Override

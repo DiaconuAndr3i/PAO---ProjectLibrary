@@ -13,13 +13,13 @@ import java.util.Date;
 public class ErrorHandler {
     @ExceptionHandler(NotFound.class)
     public ResponseEntity<?> resourceNotFound(NotFound obj, WebRequest request) {
-        Error Error = new Error(new Date(), obj.getMessage());
+        Error Error = new Error(new Date(), request.getDescription(false), obj.getMessage());
         return new ResponseEntity<>(Error, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<?> globalExcpetion(Exception ex, WebRequest request) {
-        Error Error = new Error(new Date(), ex.getMessage());
+    public ResponseEntity<?> globalExcpetion(Exception obj, WebRequest request) {
+        Error Error = new Error(new Date(), request.getDescription(false), obj.getMessage());
         return new ResponseEntity<>(Error, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

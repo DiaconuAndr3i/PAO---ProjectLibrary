@@ -26,12 +26,14 @@ public abstract class Person {
     @Column(name = "phoneNumber")
     private String phoneNumber;
 
-    public Person(String firstName, String lastName, Address address, String phoneNumber, long id) {
+    public Person() {
+    }
+
+    public Person(String firstName, String lastName, Address address, String phoneNumber) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
         this.phoneNumber = phoneNumber;
-        this.id = id;
     }
 
     public String getFirstName() {

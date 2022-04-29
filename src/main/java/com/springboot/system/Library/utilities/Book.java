@@ -22,8 +22,7 @@ public abstract class Book implements Serializable {
     @Column(name = "book_format")
     private BookFormat bookFormat;
 
-    public Book(long id, String title, String subject, BookFormat bookFormat) {
-        this.id = id;
+    public Book(String title, String subject, BookFormat bookFormat) {
         this.title = title;
         this.subject = subject;
         this.bookFormat = bookFormat;

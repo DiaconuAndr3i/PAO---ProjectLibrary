@@ -15,7 +15,7 @@ public class Library {
     @Column(name = "name")
     private String name;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "address_id")
     private Address address;
 

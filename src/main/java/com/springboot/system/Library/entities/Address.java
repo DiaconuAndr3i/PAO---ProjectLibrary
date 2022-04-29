@@ -1,6 +1,5 @@
 package com.springboot.system.Library.entities;
 
-import com.springboot.system.Library.utilities.Person;
 
 import javax.persistence.*;
 import java.util.Objects;

@@ -10,12 +10,12 @@ import javax.persistence.Table;
 @Table(name = "librarian")
 public class Librarian extends Person {
 
-    public Librarian(String firstName, String lastName, Address address, String phoneNumber, long id) {
-        super(firstName, lastName, address, phoneNumber, id);
+    public Librarian(String firstName, String lastName, Address address, String phoneNumber) {
+        super(firstName, lastName, address, phoneNumber);
     }
 
     public Librarian() {
-        this(null, null, null, null, 0);
+
     }
 
     @Override
