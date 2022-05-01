@@ -10,13 +10,18 @@ public class DBConnection {
     private static String username;
     private static String password;
     private static DBConnection dbConnection;
+
+    private static Boolean yesNo;
     private DBConnection(){
-        jdbcURL = "jdbc:postgresql://localhost:5432/employees";
+        jdbcURL = "jdbc:postgresql://localhost:5432/library";
         username = "postgres";
         password = "postgres";
         try {
             connection = DriverManager.getConnection(jdbcURL, username, password);
+            yesNo = Boolean.TRUE;
+            System.out.println("Established connection to the database.");
         }catch (SQLException exp){
+            yesNo = Boolean.FALSE;
             System.out.println("Something went wrong with connection to db.");
             exp.printStackTrace();
         }
@@ -34,5 +39,9 @@ public class DBConnection {
 
     public static void disconnectToDb() throws SQLException {
         connection.close();
+    }
+
+    public static Boolean getYesNo(){
+        return yesNo;
     }
 }

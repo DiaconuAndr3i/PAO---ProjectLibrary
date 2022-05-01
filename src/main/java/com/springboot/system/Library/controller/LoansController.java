@@ -24,6 +24,11 @@ public class LoansController {
         return this.loansInterfaceService.getAllLoans();
     }
 
+    @GetMapping("/writeLoansInCSV")
+    public Map<String, Boolean> writeLoansInCSV(){
+        return this.loansInterfaceService.writeLoansInCSV();
+    }
+
     @PostMapping("/create")
     public Loans createLoan(@RequestBody Loans loan){
         return this.loansInterfaceService.createLoan(loan);

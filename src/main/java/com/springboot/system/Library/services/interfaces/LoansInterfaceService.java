@@ -13,6 +13,7 @@ import java.util.Optional;
 public interface LoansInterfaceService {
 
     List<Loans> getAllLoans();
+    Map<String, Boolean> writeLoansInCSV();
     Loans createLoan(Loans loan);
     List<Loans> getLoansWhereReturnDateGreaterThanExpectationDate();
     Map<String, Boolean> deleteLoan(Long id) throws NotFound;

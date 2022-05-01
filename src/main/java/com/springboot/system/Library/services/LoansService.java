@@ -13,6 +13,7 @@ import com.springboot.system.Library.repository.SubscriberRepository;
 import com.springboot.system.Library.services.interfaces.AuditInterfaceService;
 import com.springboot.system.Library.services.interfaces.LibraryInterfaceService;
 import com.springboot.system.Library.services.interfaces.LoansInterfaceService;
+import com.springboot.system.Library.utilities.WriteCSVLoans;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -59,6 +60,23 @@ public class LoansService implements LoansInterfaceService {
         }
         finally {
             this.auditInterfaceService.createAction("get all loans");
+        }
+    }
+
+    @Override
+    public Map<String, Boolean> writeLoansInCSV(){
+        Map<String, Boolean> res = new HashMap<>();
+        try {
+
+            List<Loans> loans = this.loansRepository.findAll();
+            WriteCSVLoans.getInstance(loans);
+            res.put("CSV written", Boolean.TRUE);
+            return res;
+        }
+        catch (Exception ex){
+            ex.printStackTrace();
+            res.put("CSV error", Boolean.FALSE);
+            return res;
         }
     }
 
