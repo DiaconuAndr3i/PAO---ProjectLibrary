@@ -2,6 +2,8 @@ package com.springboot.system.Library.entities;
 
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -19,8 +21,11 @@ public class Library {
     @JoinColumn(name = "address_id")
     private Address address;
 
-    public Library(long id, String name, Address address) {
-        this.id = id;
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "library_id", referencedColumnName = "id")
+    private List<Loans> loans = new ArrayList<>();
+
+    public Library(String name, Address address) {
         this.name = name;
         this.address = address;
     }
@@ -51,12 +56,25 @@ public class Library {
         this.address = address;
     }
 
+    public List<Loans> getLoans() {
+        return loans;
+    }
+
+    public void setLoans(List<Loans> loans) {
+        this.loans = loans;
+    }
+
+    public void addLoan(Loans loan){
+        this.getLoans().add(loan);
+    }
+
     @Override
     public String toString() {
         return "Library{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", address=" + address +
+                ", loans=" + loans +
                 '}';
     }
 
@@ -65,11 +83,11 @@ public class Library {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Library library = (Library) o;
-        return id == library.id && Objects.equals(name, library.name) && Objects.equals(address, library.address);
+        return id == library.id && Objects.equals(name, library.name) && Objects.equals(address, library.address) && Objects.equals(loans, library.loans);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, address);
+        return Objects.hash(id, name, address, loans);
     }
 }

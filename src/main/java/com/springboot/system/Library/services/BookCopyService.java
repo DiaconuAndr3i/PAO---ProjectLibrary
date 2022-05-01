@@ -109,6 +109,8 @@ public class BookCopyService implements BookCopyInterfaceService {
     @Override
     public Map<String, Boolean> deleteBook(Long id) throws NotFound {
         BookCopy bookCopy = this.bookCopyRepository.findById(id).orElseThrow(() -> new NotFound("Book with id " + id + " doesn't exist"));
+
+        this.bookCopyRepository.deleteFromBooksAuthors(id);
         this.bookCopyRepository.delete(bookCopy);
 
         Map<String, Boolean> res = new HashMap<>();

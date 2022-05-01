@@ -6,9 +6,7 @@ import com.springboot.system.Library.enums.BookStatus;
 import com.springboot.system.Library.utilities.Book;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name = "book")
@@ -20,6 +18,10 @@ public class BookCopy extends Book {
             inverseJoinColumns = { @JoinColumn(name = "fk_author") })
     @JsonIgnore
     private Set<Author> authors = new HashSet<>();
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "book_id", referencedColumnName = "id")
+    private List<Loans> loans = new ArrayList<>();
 
     private BookStatus bookStatus;
 
@@ -51,9 +53,23 @@ public class BookCopy extends Book {
         this.getAuthors().add(author);
     }
 
+    public List<Loans> getLoan() {
+        return loans;
+    }
+
+    public void setLoan(List<Loans> loans) {
+        this.loans = loans;
+    }
+
+    public void addLoan(Loans loan){
+        this.getLoan().add(loan);
+    }
+
     @Override
     public String toString() {
-        return super.toString() + "\n" + "BookCopy{" +
+        return "BookCopy{" +
+                "authors=" + authors +
+                ", loan=" + loans +
                 ", bookStatus=" + bookStatus +
                 '}';
     }
@@ -64,11 +80,11 @@ public class BookCopy extends Book {
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         BookCopy bookCopy = (BookCopy) o;
-        return getBookStatus() == bookCopy.getBookStatus();
+        return Objects.equals(authors, bookCopy.authors) && Objects.equals(loans, bookCopy.loans) && bookStatus == bookCopy.bookStatus;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), getBookStatus());
+        return Objects.hash(super.hashCode(), authors, loans, bookStatus);
     }
 }

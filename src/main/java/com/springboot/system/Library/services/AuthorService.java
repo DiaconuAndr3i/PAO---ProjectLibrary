@@ -63,6 +63,7 @@ public class AuthorService implements AuthorInterfaceService {
     public Map<String, Boolean> deleteAuthor(Long id) throws NotFound {
         Author author = this.authorRepository.findById(id).orElseThrow(() -> new NotFound("Author with id " + id + " doesn't exist"));
 
+        this.authorRepository.deleteFromBooksAuthors(id);
         this.authorRepository.delete(author);
 
         Map<String, Boolean> res = new HashMap<>();
